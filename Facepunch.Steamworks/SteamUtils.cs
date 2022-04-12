@@ -26,6 +26,7 @@ namespace Steamworks
 			Dispatch.Install<LowBatteryPower_t>( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ), server );
 			Dispatch.Install<SteamShutdown_t>( x => SteamClosed(), server );
 			Dispatch.Install<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ), server );
+			Dispatch.Install<AppResumingFromSuspend_t>( x => OnAppResumingFromSuspend?.Invoke(), server );
 		}
 
 		private static void SteamClosed()
@@ -55,6 +56,11 @@ namespace Steamworks
 		/// Invoked when Big Picture gamepad text input has been closed. Parameter is <see langword="true"/> if text was submitted, <see langword="false"/> if cancelled etc.
 		/// </summary>
 		public static event Action<bool> OnGamepadTextInputDismissed;
+
+		/// <summary>
+		/// Invoked after the device returns from sleep/suspend mode.
+		/// </summary>
+		public static event Action OnAppResumingFromSuspend;
 
 		/// <summary>
 		/// Returns the number of seconds since the application was active.
